@@ -35,7 +35,7 @@ struct EmbeddingsLanceDb {
 }
 
 #[derive(Debug, serde::Deserialize)]
-struct CloudeResponse {
+struct ClaudeResponse {
     id: String,
     #[serde(rename = "type")]
     response_type: String,
@@ -180,7 +180,7 @@ async fn function_handler(
 
     let raw_response = generate_invocation.body().clone().into_inner();
 
-    let generated_response = serde_json::from_slice::<CloudeResponse>(&raw_response).unwrap();
+    let generated_response = serde_json::from_slice::<ClaudeResponse>(&raw_response).unwrap();
 
     println!("{:?}", generated_response.content);
     info!("got llm answer in {}", Duration::from(start_time_llm.elapsed()).as_secs_f32());

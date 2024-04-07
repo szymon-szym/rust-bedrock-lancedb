@@ -11,10 +11,11 @@ dotenv.config();
 
 (async () => {
   const dir = process.env.LANCEDB_BUCKET || "missing_s3_folder";
+  const prefix = process.env.PREFIX || "missing_prefix";
   const lanceDbTable = process.env.LANCEDB_TABLE || "missing_table_name";
   const awsRegion = process.env.AWS_REGION;
 
-  console.log("lanceDbSrc", dir);
+  console.log("lanceDbSrc", `${dir}/${prefix}`);
   console.log("lanceDbTable", lanceDbTable);
   console.log("awsRegion", awsRegion);
 
@@ -36,7 +37,7 @@ dotenv.config();
 
   const documents = await loader.loadAndSplit(splitter);
 
-  const db = await connect(dir);
+  const db = await connect(`s3://${dir}/${prefix}`);
 
   console.log("connected")
 
